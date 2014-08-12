@@ -1,7 +1,9 @@
 Altamira BPM Purchase Request
 =============================
 
-This project automates the Purchase Request business process at Altamira. To build this project follow this steps:
+This project automates the Purchase Request business process at Altamira. 
+
+To build the project follow this steps:
 
 ```
 $ cd ./yo
