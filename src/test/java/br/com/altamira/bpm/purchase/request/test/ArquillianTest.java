@@ -128,7 +128,7 @@ public class ArquillianTest {
 	 * "deleted to have a clean environment for Arquillian"); } }
 	 */
 
-	public final static String url = "http://localhost:8080/data/rest/request";
+	public final static String url = "http://localhost:8080/bpm/purchase/request/rest/request";
 
 	@Inject
 	private RequestDao requestDao;
