@@ -20,6 +20,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
 import org.camunda.bpm.engine.ProcessEngine;
@@ -56,7 +57,7 @@ import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 @RunWith(Arquillian.class)
 public class ArquillianTest {
 
-	private static final String PROCESS_DEFINITION_KEY = "altamira.bpm.purchase.request";
+	private static final String PROCESS_DEFINITION_KEY = "br.com.altamira.bpm.purchase.request";
 
 	@Deployment
 	public static WebArchive createDeployment() {
@@ -1022,4 +1023,70 @@ public class ArquillianTest {
 		assertNull(entity);
 
 	}
+	
+	@Test
+	@InSequence(80)
+	public void RequestEndpointReportTest() throws Exception {
+		
+		Request request = requestDao.current();
+		
+		assertNotNull(request.getId());
+		
+		Material material = new Material();
+		
+		material.setLamination("QQ");
+		material.setTreatment("PQ");
+		material.setThickness(new BigDecimal(2.0));
+		material.setWidth(new BigDecimal(200.0));
+		material.setLength(new BigDecimal(0));
+		material.setTax(new BigDecimal(4.5));
+		
+		RequestItem entity = new RequestItem();
+		
+		entity.setRequest(request);
+		entity.setMaterial(material);
+		entity.setArrival(new Date());
+		entity.setWeight(new BigDecimal(1234.0));
+
+		requestItemDao.create(entity);
+		
+		assertNotNull(request);
+		
+		UriBuilder context = UriBuilder.fromUri(url);
+		
+		ClientRequest client = new ClientRequest(context.path("/{id}/report")
+				.build(request.getId()).toString());
+		client.accept("application/pdf");
+
+		Response response = client.get();
+
+		assertEquals(200, response.getStatus());
+
+	}	
+
+	@Test
+	@InSequence(90)
+	public void RequestEndpointSendTest() throws Exception {
+
+		Request request = requestDao.current();
+
+		assertNotNull(request);
+
+		UriBuilder context = UriBuilder.fromUri(url);
+
+		ClientRequest client = new ClientRequest(context.path("/{id}/send")
+				.build(request.getId()).toString());
+		client.accept(MediaType.APPLICATION_JSON);
+
+		ClientResponse<Request> response = client.get(Request.class);
+
+		assertEquals(201, response.getStatus());
+
+		Request entity = response.getEntity();
+		
+		assertNotNull(entity);
+		assertNotNull(entity.getId());
+
+	}
+	
 }

@@ -27,7 +27,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
 @Stateless
-@Path("send")
+@Path("request")
 public class RequestServiceEndpoint {
 	
 	private final static Logger LOGGER = Logger.getLogger(RequestServiceEndpoint.class.getName());
@@ -44,9 +44,9 @@ public class RequestServiceEndpoint {
 //	private ProcessEngine processEngine;
 
 	@GET
-	@Path("{id:[0-9][0-9]*}")
+	@Path("{id:[0-9][0-9]*}/send")
 	@Produces("application/json")
-	public Response startProcess(@PathParam("id") long id) throws IOException {
+	public Response send(@PathParam("id") long id) throws IOException {
 		Request entity = null;
 		
 		try {
@@ -79,8 +79,6 @@ public class RequestServiceEndpoint {
 	    try {
 	    	runtimeService.startProcessInstanceByKey("br.com.altamira.bpm.purchase.request", variables);
 	    } catch(Exception e) {
-	    	entity.setSent(null);
-	    	requestDao.update(entity);
 	    	return Response.status(Status.INTERNAL_SERVER_ERROR).entity("The process can't be started !").build();
 	    }
 
