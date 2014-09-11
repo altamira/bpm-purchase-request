@@ -22,7 +22,7 @@ This project depends on [altamira-data-0.1.5-SNAPSHOT-classes](https://www.githu
 
 The unit tests are made by [Arquillian](http://arquillian.org) under [JBoss AS7](http://jbossas.jboss.org) remote container, so they need to be running first.
 
-### To setup a server (Only
+### To setup a server
 
 Download and extract the [JBoss AS 7 Application Server](http://camunda.org/release/camunda-bpm/jboss/7.1/camunda-bpm-jboss-7.1.0-Final.zip) at any folder you want. This is the JBOSS_HOME folder.
 
@@ -36,14 +36,14 @@ $ start-camunda.sh
 To compile and generate war file without run the unit tests:
 
 ```sh
-$ cd GIT_HOME/bpm-manufacturing-bom
+$ cd GIT_HOME/bpm-purchase-request
 mvn clean install -DskipTests
 ```
 
 To compile and run the unit tests:
 
 ```sh
-$ cd GIT_HOME/bpm-manufacturing-bom
+$ cd GIT_HOME/bpm-purchase-request
 mvn clean install -Parq-jbossas-remote
 ```
 
@@ -68,5 +68,5 @@ To check if JBoss is running you can access the [administrative console](http://
 
 PS: Server setup required a folder /yo/dist created on build of Webapp, this means that setup Webapp are required first.
 
-See project [Wiki](http://www.github.com/altamira/bpm-manufacturing-bom/wiki) for implementation specifications.
+See project [Wiki](http://www.github.com/altamira/bpm-purchase-request/wiki) for implementation specifications.
 
