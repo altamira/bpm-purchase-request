@@ -3,20 +3,30 @@ Altamira BPM Purchase Request
 
 This project automates the Purchase Request business process at Altamira. 
 
+### This steps setup a web app
+
 To build the project follow this steps:
 
-```
-$ cd yo
-$ npm install
+1. Download and install [Node JS](http://nodejs.org/)
+
+2. Clone this repository at your git home
+
+```sh
+$ cd GIT_HOME/bpm-manufacturing-bom/yo
+$ npm install -g yo
+$ npm install -g generator-angular
+$ npm install grunt-connect-proxy --save-dev
 $ bower install
 $ cd bower_components/overthrow
 $ npm install
 $ grunt
 $ cd ../..
+$ npm install
 $ grunt build
-$ cd ..
-$ mvn clean install -Parq-jbossas-remote
+$ grunt serve
 ```
+
+Webapp uses [Mobile Angular UI](http://mobileangularui.com/docs/) as a responsive framework what requires setup too.
 
 This project depends on [altamira-data-0.1.5-SNAPSHOT-classes](https://www.github.com/altamira/data), this module need to be in your local maven repository.
 
